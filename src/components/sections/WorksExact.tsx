@@ -57,7 +57,7 @@ export const WorksExact = () => {
       id="work"
       ref={containerRef}
       onMouseMove={handleMouseMove}
-      className="w-full bg-[#FFFFFF] text-[#0A0A0A] pt-36 pb-28 sm:pt-44 sm:pb-32 px-6 sm:px-16 relative overflow-hidden select-none"
+      className="w-full bg-[#D9DDE0] text-[#0A0A0A] pt-36 pb-28 sm:pt-44 sm:pb-32 px-6 sm:px-16 relative overflow-hidden select-none"
     >
       <div className="max-w-7xl mx-auto w-full space-y-16">
         {/* Top Header Row (Matches Image 3 & Video Exactly): Statement on left + Circular Badge right beside it */}
@@ -69,7 +69,7 @@ export const WorksExact = () => {
             className="max-w-xl"
           >
             <p className="text-xl sm:text-2xl font-sans font-medium text-[#222222] leading-snug">
-              Gared brings immense value to every project, consistently exceeding client expectations and setting new standards in the world of freelance design and development.
+              Abdul Malik brings immense value to every project, consistently exceeding client expectations and setting new standards in the world of freelance design and development.
             </p>
           </motion.div>
 

@@ -2,9 +2,9 @@ import { motion } from 'framer-motion';
 
 export const MarqueeExact = () => {
   const items = [
-    'DESIGN BY MATTHEW',
+    'DESIGN BY MALIK',
     'DIGITAL PRODUCT AND BRAND',
-    'DESIGN BY MATTHEW',
+    'DESIGN BY MALIK',
     'DIGITAL PRODUCT AND BRAND',
   ];
 

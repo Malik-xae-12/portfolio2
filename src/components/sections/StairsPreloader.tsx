@@ -5,7 +5,7 @@ interface StairsPreloaderProps {
 }
 
 export const StairsPreloader = ({
-  phrase = 'Design by Matthew. Creative Developer & Designer.',
+  phrase = 'Design by Malik. Creative Developer & Designer.',
 }: StairsPreloaderProps) => {
   const words = phrase.split(' ');
 
