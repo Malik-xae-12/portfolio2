@@ -12,7 +12,6 @@ export default defineConfig({
   resolve: {
     alias: {
       '@': path.resolve(import.meta.dirname, './src'),
-      'next/link': path.resolve(import.meta.dirname, './src/components/ui/next-link-shim.tsx'),
       'motion/react': 'framer-motion',
     },
   },

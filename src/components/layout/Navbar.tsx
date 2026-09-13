@@ -1,9 +1,107 @@
 import { useState, useEffect, useLayoutEffect, useRef } from 'react';
 import { ArrowUpRight } from 'lucide-react';
-import {
-  NotchLeftWing,
-  NotchRightWing,
-} from '@/components/ui/adaptive-notch-navigation-bar';
+import { cn } from '@/lib/utils';
+
+interface NotchWingProps {
+  position?: 'top' | 'bottom';
+  className?: string;
+  fillColor?: string;
+  strokeColor?: string;
+}
+
+function NotchLeftWing({
+  position = 'top',
+  className,
+  fillColor,
+  strokeColor,
+}: NotchWingProps) {
+  const isBottom = position === 'bottom';
+  return (
+    <svg
+      aria-hidden="true"
+      width="20"
+      height="20"
+      viewBox="0 0 20 20"
+      fill="none"
+      shapeRendering="geometricPrecision"
+      className={cn(
+        'pointer-events-none absolute right-full size-4 overflow-visible select-none transition-colors duration-200',
+        isBottom ? 'bottom-0' : 'top-0',
+        className
+      )}
+    >
+      <path
+        d={
+          isBottom
+            ? 'M 0 20 C 11.046 20 20 11.046 20 0 H 21 V 21 H 0 Z'
+            : 'M 0 0 C 11.046 0 20 8.954 20 20 H 21 V -1 H 0 Z'
+        }
+        fill={fillColor || 'currentColor'}
+        style={{ transition: 'all 700ms ease-in-out' }}
+      />
+      {strokeColor && (
+        <path
+          d={
+            isBottom
+              ? 'M 0 20 C 11.046 20 20 11.046 20 0'
+              : 'M 0 0 C 11.046 0 20 8.954 20 20'
+          }
+          fill="none"
+          stroke={strokeColor}
+          strokeWidth="1"
+          style={{ transition: 'all 700ms ease-in-out' }}
+        />
+      )}
+    </svg>
+  );
+}
+
+function NotchRightWing({
+  position = 'top',
+  className,
+  fillColor,
+  strokeColor,
+}: NotchWingProps) {
+  const isBottom = position === 'bottom';
+  return (
+    <svg
+      aria-hidden="true"
+      width="20"
+      height="20"
+      viewBox="0 0 20 20"
+      fill="none"
+      shapeRendering="geometricPrecision"
+      className={cn(
+        'pointer-events-none absolute left-full size-4 overflow-visible select-none transition-colors duration-200',
+        isBottom ? 'bottom-0' : 'top-0',
+        className
+      )}
+    >
+      <path
+        d={
+          isBottom
+            ? 'M 20 20 C 8.954 20 0 11.046 0 0 H -1 V 21 H 20 Z'
+            : 'M 20 0 C 8.954 0 0 8.954 0 20 H -1 V -1 H 20 Z'
+        }
+        fill={fillColor || 'currentColor'}
+        style={{ transition: 'all 700ms ease-in-out' }}
+      />
+      {strokeColor && (
+        <path
+          d={
+            isBottom
+              ? 'M 20 20 C 8.954 20 0 11.046 0 0'
+              : 'M 20 0 C 8.954 0 0 8.954 0 20'
+          }
+          fill="none"
+          stroke={strokeColor}
+          strokeWidth="1"
+          style={{ transition: 'all 700ms ease-in-out' }}
+        />
+      )}
+    </svg>
+  );
+}
 
 interface NavbarProps {
   isDarkSectionControlled?: boolean;
