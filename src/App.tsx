@@ -4,10 +4,10 @@ import { Navbar } from './components/layout/Navbar';
 import { StairsPreloader } from './components/sections/StairsPreloader';
 import { HeroExact } from './components/sections/HeroExact';
 import { AboutExact } from './components/sections/AboutExact';
-import { MarqueeExact } from './components/sections/MarqueeExact';
 import { PortfolioGallery } from './components/ui/portfolio-gallery';
 import { ServicesSection } from './components/sections/ServicesSection';
 import { CertificationsSection } from './components/sections/CertificationsSection';
+import { ConsultationSection } from './components/sections/ConsultationSection';
 import { ContactSection } from './components/sections/ContactSection';
 
 export function App() {
@@ -28,7 +28,7 @@ export function App() {
     const handleScroll = () => {
       const navbarY = 40;
       let isOverDark = false;
-      const darkSectionIds = ['about', 'services'];
+      const darkSectionIds = ['about', 'services', 'contact'];
       for (const id of darkSectionIds) {
         const el = document.getElementById(id);
         if (el) {
@@ -58,15 +58,6 @@ export function App() {
 
   return (
     <div className="relative w-full bg-[#D9DDE0] text-[#0A0A0A] font-sans antialiased overflow-x-clip selection:bg-black selection:text-white">
-      {/* FULL-SCREEN VIEWPORT BORDER FRAME (Slim border with reversed high-contrast outer frame fill) */}
-      <div
-        className={`fixed inset-1 sm:inset-1.5 md:inset-2 pointer-events-none z-40 rounded-xl md:rounded-2xl border transition-all duration-700 ease-in-out ${
-          isDarkSection
-            ? 'border-white/25 shadow-[0_0_0_100vmax_#F5F6F8]'
-            : 'border-black/20 shadow-[0_0_0_100vmax_#000000]'
-        }`}
-      />
-
       {/* 1. GLOBALLY FIXED ADAPTIVE NOTCH NAVBAR */}
       <Navbar
         isDarkSectionControlled={isDarkSection}
@@ -74,6 +65,7 @@ export function App() {
         onScrollToWork={() => scrollToSection('work')}
         onScrollToServices={() => scrollToSection('services')}
         onScrollToCerts={() => scrollToSection('certifications')}
+        onScrollToConsulting={() => scrollToSection('consulting')}
         onScrollToContact={() => scrollToSection('contact')}
         onReplayPreloader={handleReplayPreloader}
       />
@@ -96,11 +88,9 @@ export function App() {
         <AboutExact />
       </div>
 
-      {/* 5. Ticker Banner & Freelance Showcase */}
+      {/* 5. Freelance Showcase, Services, Certifications & Consultation */}
       <div className="relative z-30 w-full bg-[#D9DDE0]">
-        <MarqueeExact />
-
-        {/* SECTION 3: 3D Overlapping Portfolio Gallery (Replaces previous 3rd section) */}
+        {/* SECTION 3: 3D Overlapping Portfolio Gallery */}
         <PortfolioGallery
           title="Featured Freelance Projects"
           archiveButton={{
@@ -115,7 +105,15 @@ export function App() {
         {/* SECTION 5: Industry Certifications & Credentials */}
         <CertificationsSection />
 
-        {/* SECTION 6: Project Inquiry & Consultation Booking */}
+        {/* SECTION 6: Consultation & Advisory (Certification Theme) */}
+        <ConsultationSection />
+      </div>
+
+      {/* SECTION 7: Project Inquiry & Contact Form (Floating Black Cover Screen like About) */}
+      <div
+        id="contact"
+        className="relative z-30 w-full bg-[#000000] shadow-[0_-6px_30px_rgba(0,0,0,0.25)]"
+      >
         <ContactSection />
       </div>
     </div>

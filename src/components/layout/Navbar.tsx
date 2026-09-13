@@ -48,7 +48,7 @@ function NotchLeftWing({
           }
           fill="none"
           stroke={strokeColor}
-          strokeWidth="1"
+          strokeWidth="1.5"
           style={{ transition: 'all 700ms ease-in-out' }}
         />
       )}
@@ -95,7 +95,7 @@ function NotchRightWing({
           }
           fill="none"
           stroke={strokeColor}
-          strokeWidth="1"
+          strokeWidth="1.5"
           style={{ transition: 'all 700ms ease-in-out' }}
         />
       )}
@@ -109,6 +109,7 @@ interface NavbarProps {
   onScrollToWork: () => void;
   onScrollToServices: () => void;
   onScrollToCerts: () => void;
+  onScrollToConsulting?: () => void;
   onScrollToContact: () => void;
   onReplayPreloader?: () => void;
 }
@@ -119,10 +120,11 @@ export const Navbar = ({
   onScrollToWork,
   onScrollToServices,
   onScrollToCerts,
+  onScrollToConsulting,
   onScrollToContact,
   onReplayPreloader,
 }: NavbarProps) => {
-  const [activeSection, setActiveSection] = useState<'hero' | 'about' | 'work' | 'services' | 'certs' | 'contact'>('hero');
+  const [activeSection, setActiveSection] = useState<'hero' | 'about' | 'work' | 'services' | 'certs' | 'consulting' | 'contact'>('hero');
   const [internalDarkSection, setInternalDarkSection] = useState(false);
 
   const isDarkSection = isDarkSectionControlled !== undefined ? isDarkSectionControlled : internalDarkSection;
@@ -163,12 +165,13 @@ export const Navbar = ({
       } else {
         const sections: {
           id: string;
-          name: 'about' | 'work' | 'services' | 'certs' | 'contact';
+          name: 'about' | 'work' | 'services' | 'certs' | 'consulting' | 'contact';
         }[] = [
           { id: 'about', name: 'about' },
           { id: 'work', name: 'work' },
           { id: 'services', name: 'services' },
           { id: 'certifications', name: 'certs' },
+          { id: 'consulting', name: 'consulting' },
           { id: 'contact', name: 'contact' },
         ];
 
@@ -184,9 +187,9 @@ export const Navbar = ({
         }
       }
 
-      // 2. Determine if the navbar at the top ceiling is over a dark section (About or Services)
+      // 2. Determine if the navbar at the top ceiling is over a dark section (About, Services, or Contact)
       let isOverDark = false;
-      const darkSectionIds = ['about', 'services'];
+      const darkSectionIds = ['about', 'services', 'contact'];
       for (const id of darkSectionIds) {
         const el = document.getElementById(id);
         if (el) {
@@ -213,8 +216,15 @@ export const Navbar = ({
   const notchStroke = isDarkSection ? '#FFFFFF' : '#0A0A0A';
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 flex justify-center pointer-events-auto">
-      <div className="relative flex items-center">
+    <header className="fixed top-0 left-0 right-0 z-50 flex items-start justify-center pointer-events-auto">
+      {/* Top Ceiling Border Line to the left of the navbar */}
+      <div
+        className={`flex-1 h-[2.5px] transition-colors duration-700 pointer-events-none ${
+          isDarkSection ? 'bg-white/65' : 'bg-black/35'
+        }`}
+      />
+
+      <div className="relative flex items-center shrink-0">
         {/* Left Concave Notch Ear Wing (Smooth bezier ear to top ceiling edge) */}
         <NotchLeftWing
           position="top"
@@ -292,6 +302,7 @@ export const Navbar = ({
               { label: 'PROJECTS', id: 'work', onClick: onScrollToWork },
               { label: 'SERVICES', id: 'services', onClick: onScrollToServices },
               { label: 'CERTIFICATIONS', id: 'certs', onClick: onScrollToCerts },
+              { label: 'CONSULTING', id: 'consulting', onClick: onScrollToConsulting || onScrollToContact },
             ].map((item) => {
               const isActive = activeSection === item.id;
               return (
@@ -335,6 +346,13 @@ export const Navbar = ({
           </button>
         </div>
       </div>
+
+      {/* Top Ceiling Border Line to the right of the navbar */}
+      <div
+        className={`flex-1 h-[2.5px] transition-colors duration-700 pointer-events-none ${
+          isDarkSection ? 'bg-white/65' : 'bg-black/35'
+        }`}
+      />
     </header>
   );
 };

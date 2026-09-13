@@ -29,7 +29,7 @@ export const AboutExact = () => {
   return (
     <section
       ref={sectionRef}
-      className="w-full bg-[#000000] text-white pt-16 sm:pt-20 md:pt-24 pb-16 sm:pb-24 md:pb-18 px-8 sm:px-16 md:px-24 flex flex-col select-none relative z-20"
+      className="w-full bg-[#000000] text-white min-h-screen flex flex-col justify-center select-none relative z-20 pt-20 sm:pt-24 pb-16 sm:pb-20 px-8 sm:px-16 md:px-24"
     >
       {/* Center Grid: Left (/ABOUT + Animated Arrow) & Right (Animated Quote + Loom Badge) */}
       <div className="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center pt-2 sm:pt-4 pb-6 sm:pb-8">
