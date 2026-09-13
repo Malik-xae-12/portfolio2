@@ -29,10 +29,10 @@ export const AboutExact = () => {
   return (
     <section
       ref={sectionRef}
-      className="w-full min-h-screen bg-[#000000] text-white pt-16 sm:pt-20 md:pt-24 pb-12 sm:pb-16 px-8 sm:px-16 md:px-24 flex flex-col justify-center select-none relative z-20"
+      className="w-full bg-[#000000] text-white pt-16 sm:pt-20 md:pt-24 pb-16 sm:pb-24 md:pb-18 px-8 sm:px-16 md:px-24 flex flex-col select-none relative z-20"
     >
       {/* Center Grid: Left (/ABOUT + Animated Arrow) & Right (Animated Quote + Loom Badge) */}
-      <div className="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center py-4 sm:py-6">
+      <div className="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center pt-2 sm:pt-4 pb-6 sm:pb-8">
         {/* Left Column: Giant /ABOUT Headline & Animated Diagonal Arrow */}
         <div className="lg:col-span-6 space-y-4 sm:space-y-6">
           {/* Animated /ABOUT Headline - Cascades and illuminates on scroll */}
