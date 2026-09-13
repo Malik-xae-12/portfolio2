@@ -1,137 +1,118 @@
 "use client";
 
-import { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { useRef } from 'react';
 import { ShieldCheck, ExternalLink, ChevronLeft, ChevronRight } from 'lucide-react';
+import {
+  CoverflowCarousel,
+  type CoverflowSlide,
+  type CoverflowCarouselHandle,
+} from '@/components/ui/coverflow-carousel';
 
-const CERTIFICATES = [
+interface CertificationItem extends CoverflowSlide {
+  code: string;
+  level: string;
+  expiresAt: string;
+  verifyUrl: string;
+  themeColor: string;
+}
+
+const CERTIFICATES: CertificationItem[] = [
   {
     code: 'DP-700',
     title: 'DP-700: Microsoft Fabric',
     subtitle: 'Data Cloud Solutions Architect',
-    countLabel: 'Expert',
-    meta: 'Microsoft Certified',
-    cover: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=800&q=80',
+    level: 'Expert',
+    expiresAt: 'Oct 2026',
     verifyUrl: 'https://learn.microsoft.com/credentials',
-    desc: 'Implementing multi-terabyte Lakehouse, OneLake, Delta Lake, and enterprise Fabric analytics architectures.',
+    themeColor: '#0078D4',
+    src: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=800&q=80',
+    alt: 'DP-700 Microsoft Certified Data Cloud Solutions Architect',
   },
   {
     code: 'DP-600',
     title: 'DP-600: Fabric Analytics',
     subtitle: 'Enterprise Analytics Engineer',
-    countLabel: 'Associate',
-    meta: 'Microsoft Certified',
-    cover: '',
+    level: 'Associate',
+    expiresAt: 'Dec 2026',
     verifyUrl: 'https://learn.microsoft.com/credentials',
-    desc: 'Designing semantic models, DAX measures, Direct Lake mode, and automated ingestion workflows.',
+    themeColor: '#00A4EF',
+    src: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80',
+    alt: 'DP-600 Fabric Analytics Engineer Associate',
   },
   {
     code: 'DP-800',
     title: 'DP-800: Azure Data Solutions',
     subtitle: 'Designing Enterprise Data Systems',
-    countLabel: 'Specialist',
-    meta: 'Microsoft Certified',
-    cover: 'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=800&q=80',
+    level: 'Specialist',
+    expiresAt: 'Aug 2026',
     verifyUrl: 'https://learn.microsoft.com/credentials',
-    desc: 'Scalable relational & NoSQL data architectures, Synapse pipelines, and cloud database security.',
+    themeColor: '#008272',
+    src: 'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=800&q=80',
+    alt: 'DP-800 Azure Data Solutions Specialist',
   },
   {
     code: 'PL-300',
     title: 'PL-300: Power BI Analyst',
     subtitle: 'Data Modeling & Business Intelligence',
-    countLabel: 'Certified',
-    meta: 'Microsoft Certified',
-    cover: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80',
+    level: 'Certified',
+    expiresAt: 'Nov 2026',
     verifyUrl: 'https://learn.microsoft.com/credentials',
-    desc: 'Advanced data transformation in Power Query, star schema modeling, and executive KPI reporting.',
+    themeColor: '#F2C811',
+    src: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80',
+    alt: 'PL-300 Power BI Data Analyst Associate',
   },
   {
     code: 'AZ-400',
     title: 'AZ-400: Azure DevOps',
     subtitle: 'DevOps Engineer Expert',
-    countLabel: 'Expert',
-    meta: 'Microsoft Certified',
-    cover: 'https://images.unsplash.com/photo-1618401471353-b98afee0b2eb?auto=format&fit=crop&w=800&q=80',
+    level: 'Expert',
+    expiresAt: 'Jan 2027',
     verifyUrl: 'https://learn.microsoft.com/credentials',
-    desc: 'CI/CD pipeline automation, Terraform Infrastructure as Code, Git branch policies, and zero-downtime releases.',
+    themeColor: '#0078D7',
+    src: 'https://images.unsplash.com/photo-1618401471353-b98afee0b2eb?auto=format&fit=crop&w=800&q=80',
+    alt: 'AZ-400 Azure DevOps Engineer Expert',
   },
   {
     code: 'AZ-204',
     title: 'AZ-204: Azure Developer',
     subtitle: 'Cloud Application Developer',
-    countLabel: 'Associate',
-    meta: 'Microsoft Certified',
-    cover: 'https://images.unsplash.com/photo-1504639725590-34d0984388bd?auto=format&fit=crop&w=800&q=80',
+    level: 'Associate',
+    expiresAt: 'Feb 2027',
     verifyUrl: 'https://learn.microsoft.com/credentials',
-    desc: 'Serverless Functions, Container Apps, Cosmos DB, Azure Key Vault, and secure token authentication.',
+    themeColor: '#2886DE',
+    src: 'https://images.unsplash.com/photo-1504639725590-34d0984388bd?auto=format&fit=crop&w=800&q=80',
+    alt: 'AZ-204 Azure Developer Associate',
   },
 ];
 
-const CARDS_PER_PAGE = 3;
-
 export const CertificationsSection = () => {
-  const [page, setPage] = useState(0);
-  const [direction, setDirection] = useState(0);
-
-  const totalPages = Math.ceil(CERTIFICATES.length / CARDS_PER_PAGE);
-  const currentCards = CERTIFICATES.slice(
-    page * CARDS_PER_PAGE,
-    (page + 1) * CARDS_PER_PAGE
-  );
-
-  const handleNext = () => {
-    setDirection(1);
-    setPage((prev) => (prev + 1) % totalPages);
-  };
-
-  const handlePrev = () => {
-    setDirection(-1);
-    setPage((prev) => (prev - 1 + totalPages) % totalPages);
-  };
+  const carouselRef = useRef<CoverflowCarouselHandle>(null);
 
   return (
     <section
       id="certifications"
-      className="relative w-full pt-14 sm:pt-20 md:pt-24 pb-8 sm:pb-12 px-6 sm:px-12 md:px-20 bg-[#D9DDE0] text-[#0A0A0A] border-t border-black/10"
+      className="relative w-full pt-14 sm:pt-20 md:pt-24 pb-12 sm:pb-16 px-6 sm:px-12 md:px-20 bg-[#D9DDE0] text-[#0A0A0A] border-t border-black/10 select-none overflow-hidden"
     >
-      <div className="max-w-7xl mx-auto space-y-6 sm:space-y-7">
-        {/* Unified Single-Line Horizontal Header */}
-        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 border-b border-black/10 pb-4">
-          {/* Left: CERTIFICATIONS Title */}
+      <div className="max-w-7xl mx-auto space-y-8 sm:space-y-10">
+        {/* Header Bar with Title on Left, Description and Navigation Buttons at the End */}
+        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 border-b border-black/10 pb-5">
+          {/* Left: Section Title */}
           <div className="flex items-center">
             <h2 className="font-condensed font-black text-5xl sm:text-6xl md:text-7xl tracking-tight uppercase leading-none text-[#0A0A0A]">
               CERTIFICATIONS
             </h2>
           </div>
 
-          {/* Right: Description Text BESIDE Left & Right Navigation Buttons */}
+          {/* Right: Description Text and Navigation Buttons at the end */}
           <div className="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6">
             <p className="text-xs sm:text-sm font-sans text-[#555555] leading-relaxed max-w-md text-left sm:text-right">
               Officially verified Microsoft, Fabric, Power BI, DevOps, and cloud data architecture credentials.
             </p>
 
+            {/* Navigation Buttons placed at the end */}
             <div className="flex items-center gap-3 shrink-0">
-              {/* Page Dots Indicator */}
-              <div className="flex items-center gap-1.5 mr-1">
-                {Array.from({ length: totalPages }).map((_, idx) => (
-                  <button
-                    key={idx}
-                    onClick={() => {
-                      setDirection(idx > page ? 1 : -1);
-                      setPage(idx);
-                    }}
-                    className={`h-2 rounded-full transition-all duration-300 cursor-pointer ${
-                      idx === page ? 'w-5 bg-black' : 'w-2 bg-black/20 hover:bg-black/40'
-                    }`}
-                    title={`Go to page ${idx + 1}`}
-                    aria-label={`Go to page ${idx + 1}`}
-                  />
-                ))}
-              </div>
-
-              {/* Prev & Next Buttons */}
               <button
-                onClick={handlePrev}
+                onClick={() => carouselRef.current?.prev()}
                 aria-label="Previous Certifications"
                 className="w-10 h-10 rounded-full border border-black/15 bg-[#F5F6F8] text-black hover:bg-black hover:text-white transition-all duration-200 shadow-sm flex items-center justify-center cursor-pointer active:scale-95 group"
                 title="Previous certifications"
@@ -139,7 +120,7 @@ export const CertificationsSection = () => {
                 <ChevronLeft className="w-4 h-4 group-hover:-translate-x-0.5 transition-transform" />
               </button>
               <button
-                onClick={handleNext}
+                onClick={() => carouselRef.current?.next()}
                 aria-label="Next Certifications"
                 className="w-10 h-10 rounded-full border border-black/15 bg-[#F5F6F8] text-black hover:bg-black hover:text-white transition-all duration-200 shadow-sm flex items-center justify-center cursor-pointer active:scale-95 group"
                 title="Next certifications"
@@ -150,142 +131,107 @@ export const CertificationsSection = () => {
           </div>
         </div>
 
-        {/* Certifications Carousel: Exactly 3 Cards at a time */}
-        <div className="relative overflow-hidden min-h-[440px]">
-          <AnimatePresence mode="wait" custom={direction}>
-            <motion.div
-              key={page}
-              custom={direction}
-              variants={{
-                enter: (dir: number) => ({
-                  x: dir > 0 ? 60 : -60,
-                  opacity: 0,
-                }),
-                center: {
-                  x: 0,
-                  opacity: 1,
-                },
-                exit: (dir: number) => ({
-                  x: dir > 0 ? -60 : 60,
-                  opacity: 0,
-                }),
-              }}
-              initial="enter"
-              animate="center"
-              exit="exit"
-              transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 sm:gap-10"
-            >
-              {currentCards.map((cert) => (
-                <div
-                  key={cert.code}
-                  className="bg-[#F5F6F8] rounded-3xl p-6 border border-black/10 shadow-[0_8px_30px_rgba(0,0,0,0.06)] hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 flex flex-col justify-between group select-none"
-                >
-                  {/* Top Cover / Header with Badges */}
-                  <div>
-                    {cert.cover ? (
-                      <div className="relative h-44 w-full rounded-2xl overflow-hidden border border-black/5 mb-5 bg-[#F6F6F6]">
-                        <img
-                          src={cert.cover}
-                          alt={cert.title}
-                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                        />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+        {/* 3D Coverflow Carousel with Certification Badge on Upper Side and Expire At & Verify Text Down */}
+        <div className="relative w-full">
+          <CoverflowCarousel
+            ref={carouselRef}
+            slides={CERTIFICATES}
+            cardWidth="clamp(280px, 30vw, 360px)"
+            rotate={40}
+            depth={0.55}
+            perspective={3.2}
+            gap={0.06}
+            loop={true}
+            showNavigation={false}
+            showPagination={true}
+            showCaption={false}
+            renderCard={(slide) => {
+              const cert = slide as CertificationItem;
+              return (
+                <div className="relative w-full h-full p-6 sm:p-7 flex flex-col justify-between overflow-hidden bg-gradient-to-b from-[#111317] via-[#0D0E12] to-[#07080A] text-white border border-white/10 shadow-2xl rounded-3xl select-none group">
+                  {/* Radial Halo Glow matching credential theme */}
+                  <div
+                    className="absolute -top-16 -right-16 w-44 h-44 rounded-full blur-3xl opacity-35 pointer-events-none transition-opacity duration-500 group-hover:opacity-60"
+                    style={{ backgroundColor: cert.themeColor || '#0078D4' }}
+                  />
+                  <div
+                    className="absolute -bottom-16 -left-16 w-40 h-40 rounded-full blur-3xl opacity-20 pointer-events-none"
+                    style={{ backgroundColor: cert.themeColor || '#0078D4' }}
+                  />
 
-                        {/* Code Badge */}
-                        <div className="absolute top-3.5 left-3.5">
-                          <span className="px-3 py-1 rounded-full bg-black/70 backdrop-blur-md border border-white/20 text-white font-mono font-bold text-xs">
-                            {cert.code}
+                  {/* UPPER SIDE: Certification Badge & Credential Information */}
+                  <div className="relative z-10 flex flex-col items-center text-center">
+                    {/* Top Row: Code Pill and Level Badge */}
+                    <div className="w-full flex items-center justify-between gap-2 mb-4">
+                      <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/10 backdrop-blur-md border border-white/15 text-xs font-mono font-bold tracking-wider text-white shadow-sm">
+                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                        <span>{cert.code}</span>
+                      </div>
+
+                      <span className="px-2.5 py-1 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 text-[10px] font-mono font-bold uppercase tracking-wider">
+                        {cert.level}
+                      </span>
+                    </div>
+
+                    {/* Central 3D Certification Badge Medallion */}
+                    <div className="relative my-2 sm:my-3">
+                      <div
+                        className="w-24 h-24 sm:w-28 sm:h-28 rounded-2xl p-[1.5px] shadow-[0_10px_35px_rgba(0,0,0,0.6)] flex items-center justify-center transition-transform duration-500 group-hover:scale-105"
+                        style={{
+                          background: `linear-gradient(135deg, ${cert.themeColor || '#0078D4'}, rgba(255,255,255,0.4), ${cert.themeColor || '#0078D4'})`,
+                        }}
+                      >
+                        <div className="w-full h-full rounded-[14px] bg-gradient-to-br from-[#181A22] to-[#0A0B0E] p-3 flex flex-col items-center justify-center text-center shadow-inner">
+                          {/* Certification Shield Icon */}
+                          <ShieldCheck
+                            className="w-10 h-10 sm:w-12 sm:h-12 mb-1.5 drop-shadow-[0_0_15px_rgba(255,255,255,0.4)]"
+                            style={{ color: cert.themeColor || '#0078D4' }}
+                          />
+                          <span className="text-[9px] sm:text-[10px] font-mono font-black uppercase tracking-widest text-white/90">
+                            MICROSOFT
                           </span>
-                        </div>
-
-                        {/* Verified Badge */}
-                        <div className="absolute top-3.5 right-3.5 flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-500/90 backdrop-blur-md text-white font-mono font-bold text-[10px] tracking-wider uppercase shadow-sm">
-                          <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
-                          <span>VERIFIED</span>
-                        </div>
-
-                        {/* Bottom Level & Authority on Cover */}
-                        <div className="absolute bottom-3 left-3.5 right-3.5 flex items-center justify-between text-white">
-                          <span className="text-[11px] font-mono tracking-wider uppercase text-white/90">
-                            {cert.meta}
-                          </span>
-                          <span className="px-2.5 py-0.5 rounded-md bg-white/20 backdrop-blur-sm text-[10px] font-mono font-bold uppercase text-white">
-                            {cert.countLabel}
+                          <span className="text-[7.5px] sm:text-[8.5px] font-mono tracking-wider text-neutral-400 uppercase">
+                            CERTIFIED
                           </span>
                         </div>
                       </div>
-                    ) : (
-                      <div className="relative h-44 w-full rounded-2xl overflow-hidden border border-black/10 mb-5 bg-gradient-to-br from-neutral-900 via-neutral-950 to-black p-5 flex flex-col justify-between">
-                        {/* Top Badges */}
-                        <div className="flex items-center justify-between">
-                          <span className="px-3 py-1 rounded-full bg-white/10 backdrop-blur-md border border-white/15 text-white font-mono font-bold text-xs">
-                            {cert.code}
-                          </span>
-                          <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-500/90 text-white font-mono font-bold text-[10px] tracking-wider uppercase shadow-sm">
-                            <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
-                            <span>VERIFIED</span>
-                          </div>
-                        </div>
+                    </div>
 
-                        {/* Center Icon & Branding */}
-                        <div className="flex items-center gap-3">
-                          <div className="w-12 h-12 rounded-xl bg-white/10 border border-white/10 flex items-center justify-center text-white">
-                            <ShieldCheck className="w-6 h-6 text-emerald-400" />
-                          </div>
-                          <div>
-                            <span className="text-[10px] font-mono uppercase tracking-wider text-neutral-400 block">
-                              MICROSOFT CERTIFIED
-                            </span>
-                            <span className="text-sm font-sans font-bold text-white block">
-                              {cert.subtitle}
-                            </span>
-                          </div>
-                        </div>
-
-                        {/* Bottom Meta */}
-                        <div className="flex items-center justify-between text-neutral-300">
-                          <span className="text-[11px] font-mono tracking-wider uppercase text-neutral-400">
-                            {cert.meta}
-                          </span>
-                          <span className="px-2.5 py-0.5 rounded-md bg-white/15 text-[10px] font-mono font-bold uppercase text-white">
-                            {cert.countLabel}
-                          </span>
-                        </div>
-                      </div>
-                    )}
-
-                    {/* Content */}
-                    <h3 className="font-sans font-bold text-xl text-[#0A0A0A] leading-snug group-hover:text-black">
+                    {/* Credential Title & Role Subtitle */}
+                    <h3 className="text-base sm:text-lg font-bold font-sans tracking-tight text-white line-clamp-1 mt-1">
                       {cert.title}
                     </h3>
-                    <p className="text-xs font-mono font-semibold text-emerald-700 mt-1">
+                    <p className="text-xs font-mono text-neutral-400 line-clamp-1 mt-0.5">
                       {cert.subtitle}
-                    </p>
-                    <p className="mt-3 text-xs sm:text-sm font-sans text-[#555555] leading-relaxed">
-                      {cert.desc}
                     </p>
                   </div>
 
-                  {/* Verification Footer Link */}
-                  <div className="pt-5 mt-4 border-t border-black/5 flex items-center justify-between">
-                    <span className="text-[11px] font-mono text-[#888888]">
-                      Official Microsoft Credential
-                    </span>
+                  {/* DOWN: Expire at & Verify Text */}
+                  <div className="relative z-10 pt-4 border-t border-white/10 flex items-center justify-between mt-auto">
+                    <div className="flex flex-col text-left">
+                      <span className="text-[10px] font-mono uppercase tracking-wider text-neutral-400">
+                        Expire at
+                      </span>
+                      <span className="text-xs sm:text-sm font-mono font-bold text-white tracking-wide">
+                        {cert.expiresAt}
+                      </span>
+                    </div>
+
                     <a
                       href={cert.verifyUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-black/5 hover:bg-black hover:text-white text-xs font-mono font-bold text-[#0A0A0A] transition-all shrink-0 cursor-pointer"
+                      onClick={(e) => e.stopPropagation()}
+                      className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-white text-black hover:bg-neutral-200 transition-all font-mono font-bold text-xs tracking-wider uppercase shadow-md active:scale-95 group/btn cursor-pointer"
                     >
                       <span>Verify</span>
-                      <ExternalLink className="w-3.5 h-3.5" />
+                      <ExternalLink className="w-3.5 h-3.5 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5 transition-transform" />
                     </a>
                   </div>
                 </div>
-              ))}
-            </motion.div>
-          </AnimatePresence>
+              );
+            }}
+          />
         </div>
       </div>
     </section>
