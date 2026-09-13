@@ -4,7 +4,6 @@ import React, { useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import {
   Mail,
-  Calendar,
   Clock,
   Sparkles,
   ShieldCheck,
@@ -28,6 +27,8 @@ const LinkedinIcon = ({ className = "w-3.5 h-3.5" }: { className?: string }) => 
   </svg>
 );
 
+import { MeshGradientSVG } from '../ui/shader-svg';
+
 export const ConsultationSection = () => {
   const [copiedEmail, setCopiedEmail] = useState(false);
 
@@ -42,184 +43,175 @@ export const ConsultationSection = () => {
   return (
     <section
       id="consulting"
-      className="relative w-full bg-[#D9DDE0] text-[#0A0A0A] pt-10 sm:pt-14 pb-14 sm:pb-20 px-6 sm:px-12 md:px-20 border-t border-black/10 overflow-hidden select-none"
+      className="relative w-full bg-[#D9DDE0] text-[#0A0A0A] pt-6 sm:pt-8 pb-10 sm:pb-14 px-6 sm:px-12 md:px-20 border-t border-black/10 overflow-hidden select-none"
     >
-      <div className="max-w-5xl mx-auto w-full space-y-8 sm:space-y-10">
-        
-        {/* Section Header */}
-        <div>
-          <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-4">
-            <div>
-              <h2 className="font-condensed font-black text-4xl sm:text-5xl md:text-6xl tracking-tight uppercase leading-[0.9] text-[#0A0A0A]">
-                CONSULTING &amp; ADVISORY
-              </h2>
-            </div>
-
-            <p className="max-w-md text-xs sm:text-sm font-sans text-[#555555] leading-relaxed text-left lg:text-right">
-              Direct communication channels, rapid freelance engagement, and 1-on-1 architecture discovery sessions.
-            </p>
-          </div>
-
-          <div className="h-[1px] bg-black/10 mt-5" />
-        </div>
-
-        {/* COMPACT SMALL BOXES: Available for Freelance & Book a Call side-by-side */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-6 items-stretch">
+      <div className="max-w-7xl mx-auto w-full">
+        {/* COMPACT EXPANDED CARD */}
+        <div className="bg-[#F5F6F8] rounded-2xl sm:rounded-3xl p-4 sm:p-6 md:p-7 border border-black/10 shadow-xs hover:border-black/20 hover:shadow-md transition-all duration-300">
           
-          {/* CARD 1: Available for Freelance & Advisory */}
-          <div className="bg-[#F5F6F8] rounded-2xl p-5 sm:p-6 border border-black/10 shadow-xs flex flex-col justify-between space-y-4 hover:border-black/20 hover:shadow-md transition-all duration-300">
-            <div className="space-y-2.5">
-              <div className="flex items-center justify-between">
-                <span className="text-[10px] font-mono font-bold text-[#777777] uppercase tracking-wider">
-                  DIRECT CHANNELS
-                </span>
-              </div>
-
-              <div>
-                <h3 className="font-sans font-bold text-lg sm:text-xl text-[#0A0A0A] leading-snug">
-                  Available for Freelance &amp; Advisory
-                </h3>
-                <p className="text-xs font-sans text-[#555555] leading-relaxed mt-1">
-                  Accepting select enterprise cloud data contracts, Microsoft Fabric platforms, and full-stack systems.
-                </p>
-              </div>
-            </div>
-
-            {/* 3 Compact Channel Rows */}
-            <div className="space-y-2 pt-3 border-t border-black/5">
-              {/* 1. Direct Email */}
-              <div className="relative group/mail flex items-center justify-between p-2.5 rounded-xl bg-white hover:bg-[#0A0A0A] hover:text-white border border-black/10 transition-all shadow-2xs">
-                <a
-                  href="mailto:malikxae12@gmail.com"
-                  className="flex items-center gap-2.5 min-w-0 flex-1"
-                >
-                  <div className="w-7 h-7 rounded-lg bg-black/5 group-hover/mail:bg-white/15 flex items-center justify-center shrink-0 transition-colors">
-                    <Mail className="w-3.5 h-3.5 text-black group-hover/mail:text-white transition-colors" />
-                  </div>
-                  <div className="flex flex-col min-w-0">
-                    <span className="text-[9px] font-mono uppercase text-[#777777] group-hover/mail:text-white/70">Direct Email</span>
-                    <span className="text-xs font-bold truncate">malikxae12@gmail.com</span>
-                  </div>
-                </a>
-
-                {/* 1-Click Copy Button */}
-                <div className="relative flex items-center">
-                  <button
-                    type="button"
-                    onClick={handleCopyEmail}
-                    title="Copy email to clipboard"
-                    className="p-1.5 rounded-lg bg-black/5 group-hover/mail:bg-white/20 text-[#666666] group-hover/mail:text-white transition-all cursor-pointer"
-                  >
-                    {copiedEmail ? (
-                      <Check className="w-3.5 h-3.5 text-emerald-500 group-hover/mail:text-emerald-400 stroke-[3]" />
-                    ) : (
-                      <Copy className="w-3.5 h-3.5" />
-                    )}
-                  </button>
-
-                  <AnimatePresence>
-                    {copiedEmail && (
-                      <motion.span
-                        initial={{ opacity: 0, y: 6, scale: 0.9 }}
-                        animate={{ opacity: 1, y: 0, scale: 1 }}
-                        exit={{ opacity: 0, y: 6, scale: 0.9 }}
-                        className="absolute right-0 bottom-full mb-1.5 px-2 py-0.5 rounded-md bg-[#0A0A0A] text-white font-sans font-bold text-[9px] tracking-wider uppercase whitespace-nowrap shadow-md pointer-events-none"
-                      >
-                        Copied!
-                      </motion.span>
-                    )}
-                  </AnimatePresence>
-                </div>
-              </div>
-
-              {/* 2. GitHub */}
-              <a
-                href="https://github.com/Malik-xae-12"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center justify-between p-2.5 rounded-xl bg-white hover:bg-[#0A0A0A] hover:text-white border border-black/10 transition-all shadow-2xs group/git"
-              >
-                <div className="flex items-center gap-2.5 min-w-0">
-                  <div className="w-7 h-7 rounded-lg bg-black/5 group-hover/git:bg-white/15 flex items-center justify-center shrink-0 transition-colors">
-                    <GithubIcon className="w-3.5 h-3.5 text-black group-hover/git:text-white transition-colors" />
-                  </div>
-                  <div className="flex flex-col min-w-0">
-                    <span className="text-[9px] font-mono uppercase text-[#777777] group-hover/git:text-white/70">Source Code &amp; Repos</span>
-                    <span className="text-xs font-bold truncate">github.com/Malik-xae-12</span>
-                  </div>
-                </div>
-                <ArrowUpRight className="w-3.5 h-3.5 text-[#888888] group-hover/git:text-white group-hover/git:translate-x-0.5 group-hover/git:-translate-y-0.5 transition-all" />
-              </a>
-
-              {/* 3. LinkedIn */}
-              <a
-                href="https://www.linkedin.com/in/abdulmalikmohammed786/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center justify-between p-2.5 rounded-xl bg-white hover:bg-[#0A0A0A] hover:text-white border border-black/10 transition-all shadow-2xs group/in"
-              >
-                <div className="flex items-center gap-2.5 min-w-0">
-                  <div className="w-7 h-7 rounded-lg bg-black/5 group-hover/in:bg-white/15 flex items-center justify-center shrink-0 transition-colors">
-                    <LinkedinIcon className="w-3.5 h-3.5 text-black group-hover/in:text-white transition-colors" />
-                  </div>
-                  <div className="flex flex-col min-w-0">
-                    <span className="text-[9px] font-mono uppercase text-[#777777] group-hover/in:text-white/70">Professional Network</span>
-                    <span className="text-xs font-bold truncate">linkedin.com/in/abdulmalikmohammed786</span>
-                  </div>
-                </div>
-                <ArrowUpRight className="w-3.5 h-3.5 text-[#888888] group-hover/in:text-white group-hover/in:translate-x-0.5 group-hover/in:-translate-y-0.5 transition-all" />
-              </a>
-            </div>
+          {/* UPPER HEADING: CENTERED TITLE ONLY */}
+          <div className="flex flex-col items-center text-center max-w-2xl mx-auto">
+            <h3 className="font-sans font-bold text-lg sm:text-2xl md:text-3xl text-[#0A0A0A] tracking-tight leading-snug">
+              Enterprise Cloud Data &amp; Architecture Advisory
+            </h3>
           </div>
 
-          {/* CARD 2: Schedule a 30-Min Architecture Discovery */}
-          <div className="bg-[#F5F6F8] rounded-2xl p-5 sm:p-6 border border-black/10 shadow-xs flex flex-col justify-between space-y-4 hover:border-black/20 hover:shadow-md transition-all duration-300">
-            <div className="space-y-2.5">
-              <div className="flex items-center gap-1.5 text-[10px] font-mono text-emerald-700 font-bold uppercase tracking-wider">
-                <Calendar className="w-3.5 h-3.5" />
-                <span>DIRECT 1-ON-1 DISCOVERY</span>
-              </div>
+          {/* SEPARATOR LINE WITH ANIMATION */}
+          <div className="relative w-full h-[1px] my-3.5 sm:my-4 bg-black/10 overflow-hidden">
+            <motion.div
+              className="absolute top-0 left-0 h-full w-48 bg-gradient-to-r from-transparent via-[#0078D4] to-transparent"
+              animate={{
+                x: ['-100%', '700%'],
+              }}
+              transition={{
+                duration: 3.2,
+                repeat: Infinity,
+                ease: "easeInOut",
+              }}
+            />
+          </div>
 
-              <div>
-                <h3 className="font-sans font-bold text-lg sm:text-xl text-[#0A0A0A] leading-snug">
-                  Schedule a 30-Min Architecture Discovery
-                </h3>
-                <p className="text-xs font-sans text-[#555555] leading-relaxed mt-1">
-                  Review your stack, discuss scaling bottlenecks, or plan an end-to-end Microsoft Fabric &amp; Azure data platform migration.
-                </p>
-              </div>
+          {/* TWO-COLUMN COMPACT INTERIOR: Animation on Left, 3 Points & Direct Channels on Right */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 sm:gap-6 lg:gap-8 items-center">
+            
+            {/* LEFT: Compact Interactive Shader Animation Stage */}
+            <div className="lg:col-span-5 flex flex-col items-center justify-center">
+              <div className="relative w-full rounded-xl sm:rounded-2xl bg-[#0A0A0A] border border-black/15 overflow-hidden flex items-center justify-center py-2 sm:py-3 px-3 shadow-md group/avatar h-[190px] sm:h-[205px]">
+                {/* Subtle Ambient Radial Glow */}
+                <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_45%,rgba(74,144,226,0.22),transparent_70%)] pointer-events-none" />
+                
+                {/* Scaled Avatar */}
+                <MeshGradientSVG className="max-w-[145px] h-[165px]" />
 
-              {/* 3 Value Points */}
-              <div className="space-y-2 pt-3 border-t border-black/5 text-xs font-sans text-[#333333]">
-                <div className="flex items-center gap-2.5">
-                  <div className="w-6 h-6 rounded-md bg-emerald-500/10 flex items-center justify-center shrink-0">
-                    <Clock className="w-3.5 h-3.5 text-emerald-700" />
-                  </div>
-                  <span>30 Minutes &bull; Google Meet or Microsoft Teams</span>
-                </div>
-                <div className="flex items-center gap-2.5">
-                  <div className="w-6 h-6 rounded-md bg-emerald-500/10 flex items-center justify-center shrink-0">
-                    <Sparkles className="w-3.5 h-3.5 text-emerald-700" />
-                  </div>
-                  <span>Free architectural roadmap &amp; stack assessment</span>
-                </div>
-                <div className="flex items-center gap-2.5">
-                  <div className="w-6 h-6 rounded-md bg-emerald-500/10 flex items-center justify-center shrink-0">
-                    <ShieldCheck className="w-3.5 h-3.5 text-emerald-700" />
-                  </div>
-                  <span>Direct discussion with Abdul Malik (No sales reps)</span>
+                <div className="absolute bottom-2 right-2 px-2 py-0.5 rounded-md bg-white/10 backdrop-blur-xs border border-white/10 text-[9px] font-mono text-white/75 pointer-events-none">
+                  Tracks Cursor
                 </div>
               </div>
             </div>
 
-            {/* Call CTA Button */}
-            <a
-              href="mailto:malikxae12@gmail.com?subject=30-Min%20Architecture%20Discovery%20Call"
-              className="w-full text-center py-3 rounded-xl bg-[#0A0A0A] text-white font-sans font-bold text-xs tracking-wider uppercase hover:bg-black active:scale-[0.99] transition-all shadow-md cursor-pointer mt-3 flex items-center justify-center gap-1.5"
-            >
-              <span>Book Consultation Call</span>
-              <ArrowUpRight className="w-3.5 h-3.5" />
-            </a>
+            {/* RIGHT: COMPACT 3 POINTS + Direct Channels */}
+            <div className="lg:col-span-7 flex flex-col justify-between space-y-3">
+              
+              {/* 3 Points - Compact */}
+              <div className="space-y-1.5 text-xs font-sans text-[#333333]">
+                {/* Point 1 */}
+                <div className="flex items-center gap-2.5 p-2 rounded-lg bg-white border border-black/5 shadow-2xs">
+                  <div className="w-6 h-6 rounded-md bg-black/5 border border-black/5 flex items-center justify-center shrink-0">
+                    <Clock className="w-3.5 h-3.5 text-[#0A0A0A]" />
+                  </div>
+                  <div className="truncate text-xs">
+                    <strong className="text-[#0A0A0A]">30 Minutes</strong> &bull; Google Meet or Microsoft Teams
+                  </div>
+                </div>
+
+                {/* Point 2 */}
+                <div className="flex items-center gap-2.5 p-2 rounded-lg bg-white border border-black/5 shadow-2xs">
+                  <div className="w-6 h-6 rounded-md bg-black/5 border border-black/5 flex items-center justify-center shrink-0">
+                    <Sparkles className="w-3.5 h-3.5 text-[#0A0A0A]" />
+                  </div>
+                  <div className="truncate text-xs">
+                    <strong className="text-[#0A0A0A]">Free Assessment:</strong> Architectural roadmap &amp; stack review
+                  </div>
+                </div>
+
+                {/* Point 3 */}
+                <div className="flex items-center gap-2.5 p-2 rounded-lg bg-white border border-black/5 shadow-2xs">
+                  <div className="w-6 h-6 rounded-md bg-black/5 border border-black/5 flex items-center justify-center shrink-0">
+                    <ShieldCheck className="w-3.5 h-3.5 text-[#0A0A0A]" />
+                  </div>
+                  <div className="truncate text-xs">
+                    <strong className="text-[#0A0A0A]">Direct 1-on-1:</strong> Technical talk with Abdul Malik (No sales reps)
+                  </div>
+                </div>
+              </div>
+
+              {/* Direct Channels & Action Row */}
+              <div className="space-y-2 pt-2 border-t border-black/5">
+                {/* 1. Direct Email with 1-Click Copy */}
+                <div className="relative group/mail flex items-center justify-between p-2 rounded-lg bg-white hover:bg-[#0A0A0A] hover:text-white border border-black/10 transition-all shadow-2xs">
+                  <a
+                    href="mailto:malikxae12@gmail.com"
+                    className="flex items-center gap-2 min-w-0 flex-1"
+                  >
+                    <div className="w-6 h-6 rounded-md bg-black/5 group-hover/mail:bg-white/15 flex items-center justify-center shrink-0 transition-colors">
+                      <Mail className="w-3.5 h-3.5 text-black group-hover/mail:text-white transition-colors" />
+                    </div>
+                    <div className="flex items-center gap-1.5 min-w-0">
+                      <span className="text-[9px] font-mono uppercase text-[#777777] group-hover/mail:text-white/70">Email:</span>
+                      <span className="text-xs font-bold truncate">malikxae12@gmail.com</span>
+                    </div>
+                  </a>
+
+                  {/* Copy Button */}
+                  <div className="relative flex items-center">
+                    <button
+                      type="button"
+                      onClick={handleCopyEmail}
+                      title="Copy email to clipboard"
+                      className="p-1.5 rounded-md bg-black/5 group-hover/mail:bg-white/20 text-[#666666] group-hover/mail:text-white transition-all cursor-pointer"
+                    >
+                      {copiedEmail ? (
+                        <Check className="w-3.5 h-3.5 text-emerald-500 group-hover/mail:text-emerald-400 stroke-[3]" />
+                      ) : (
+                        <Copy className="w-3.5 h-3.5" />
+                      )}
+                    </button>
+
+                    <AnimatePresence>
+                      {copiedEmail && (
+                        <motion.span
+                          initial={{ opacity: 0, y: 6, scale: 0.9 }}
+                          animate={{ opacity: 1, y: 0, scale: 1 }}
+                          exit={{ opacity: 0, y: 6, scale: 0.9 }}
+                          className="absolute right-0 bottom-full mb-1 px-2 py-0.5 rounded-md bg-[#0A0A0A] text-white font-sans font-bold text-[9px] tracking-wider uppercase whitespace-nowrap shadow-md pointer-events-none"
+                        >
+                          Copied!
+                        </motion.span>
+                      )}
+                    </AnimatePresence>
+                  </div>
+                </div>
+
+                {/* GitHub, LinkedIn, and Book Consultation Call in compact 3-column grid */}
+                <div className="grid grid-cols-3 gap-2">
+                  {/* GitHub */}
+                  <a
+                    href="https://github.com/Malik-xae-12"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center justify-center gap-1 p-2 rounded-lg bg-white hover:bg-[#0A0A0A] hover:text-white border border-black/10 transition-all shadow-2xs group/git text-xs font-bold"
+                  >
+                    <GithubIcon className="w-3 h-3 text-black group-hover/git:text-white transition-colors shrink-0" />
+                    <span className="truncate">GitHub</span>
+                    <ArrowUpRight className="w-3 h-3 text-[#888888] group-hover/git:text-white shrink-0" />
+                  </a>
+
+                  {/* LinkedIn */}
+                  <a
+                    href="https://www.linkedin.com/in/abdulmalikmohammed786/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center justify-center gap-1 p-2 rounded-lg bg-white hover:bg-[#0A0A0A] hover:text-white border border-black/10 transition-all shadow-2xs group/in text-xs font-bold"
+                  >
+                    <LinkedinIcon className="w-3 h-3 text-black group-hover/in:text-white transition-colors shrink-0" />
+                    <span className="truncate">LinkedIn</span>
+                    <ArrowUpRight className="w-3 h-3 text-[#888888] group-hover/in:text-white shrink-0" />
+                  </a>
+
+                  {/* Book Call CTA Button */}
+                  <a
+                    href="mailto:malikxae12@gmail.com?subject=30-Min%20Architecture%20Discovery%20Call"
+                    className="flex items-center justify-center gap-1 p-2 rounded-lg bg-[#0A0A0A] text-white hover:bg-black active:scale-[0.98] transition-all shadow-sm font-sans font-bold text-xs tracking-wider uppercase cursor-pointer"
+                  >
+                    <span className="truncate">Book Call</span>
+                    <ArrowUpRight className="w-3 h-3 shrink-0" />
+                  </a>
+                </div>
+
+              </div>
+
+            </div>
+
           </div>
 
         </div>
